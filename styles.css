@@ -7,11 +7,12 @@
 
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #5b21b6, #000);
+  background: linear-gradient(to bottom, #1e3a8a, #0f172a);
   color: white;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  padding-bottom: 120px;
 }
 
 a {

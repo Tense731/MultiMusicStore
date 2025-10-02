@@ -1,85 +1,4 @@
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #5b21b6, #000);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-a {
-  text-decoration: none;
-  color: white;
-  transition: 0.3s;
-}
-
-/* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  height: 70px;
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-/* Desktop Navigation */
-.desktop-nav {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.desktop-nav a {
-  margin: 0 15px;
-  font-weight: 500;
-}
-
-.desktop-nav a:hover,
-.desktop-nav a.active {
-  color: #f472b6;
-}
-
-/* Auth Buttons */
-.auth-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.login-btn, .signup-btn, .buy-btn {
-  border: none;
-  padding: 10px 20px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-  color: white;
-}
-
-.login-btn { background: #3b82f6; }
-.login-btn:hover { background: #2563eb; }
-
-.signup-btn { background: #10b981; }
-.signup-btn:hover { background: #059669; }
-
-.buy-btn { background: #ec4899; }
-.buy-btn:hover { background: #db2777; }
+/* Browse Page Specific Styles */
 
 /* Browse Section */
 .browse-section {
@@ -102,6 +21,8 @@ a {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .music-card {

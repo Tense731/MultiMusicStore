@@ -3,64 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Browse Music | MultiMusic</title>
+  <title>MultiMusic - Stream Your Favorite Music</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="browse.css">
   <link rel="stylesheet" href="player.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
-  <!-- HEADER -->
   <header class="header">
     <h1 class="logo">MultiMusic</h1>
 
-    <!-- Desktop Navigation -->
     <nav class="desktop-nav">
-      <a href="index.html">Home</a>
-      <a href="browse.html" class="active" style="color: #ec4899;">Browse</a>
+      <a href="index.html" class="active" style="color: #ec4899;">Home</a>
+      <a href="browse.html">Browse</a>
       <a href="artist.html">Artists</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
 
-    <!-- Auth Buttons (desktop only) -->
     <div class="auth-buttons desktop-auth">
-       <a href="login.html" class="login-btn">Login</a>
-    <a href="signup.html" class="signup-btn">Sign Up</a>
+      <a href="login.html" class="login-btn">Login</a>
+      <a href="signup.html" class="signup-btn">Sign Up</a>
     </div>
 
-    <!-- Hamburger (mobile only) -->
     <button class="hamburger" onclick="toggleMenu()">☰</button>
   </header>
 
   <nav class="mobile-nav" id="navMenu">
     <a href="index.html">Home</a>
-    <a href="browse.html" class="active">Browse</a>
+    <a href="browse.html">Browse</a>
     <a href="artist.html">Artists</a>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
     <div class="auth-buttons">
-     <button class="login-btn"><a href="login.html">Login</a></button>
+      <button class="login-btn"><a href="login.html">Login</a></button>
       <button class="signup-btn"><a href="signup.html">Sign Up</a></button>
     </div>
   </nav>
 
-  <main class="browse-section">
-    <h2>Browse Music</h2>
-    <p class="section-subtitle">Explore trending songs from top artists</p>
+  <main class="hero">
+    <h2 class="hero-title">Stream Unlimited Music</h2>
+    <p class="hero-subtitle">
+      Discover millions of songs from your favorite artists. Listen anytime, anywhere.
+    </p>
+    <button class="browse-btn" onclick="window.location.href='browse.html'">Browse Music</button>
+  </main>
 
-    <div class="search-filter-section" style="max-width: 1200px; margin: 20px auto; padding: 0 20px;">
-      <input type="text" id="search-input" placeholder="Search for songs or artists..."
-        style="width: 100%; padding: 12px 20px; border-radius: 25px; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; font-size: 1rem; outline: none;">
-      <div id="genre-filters" style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;"></div>
+  <section class="top-artists">
+    <h2>Top Artists</h2>
+    <div class="artist-list" id="top-artists-list">
+      <div class="artist-card">Loading...</div>
     </div>
+  </section>
 
-    <div class="music-grid" id="songs-grid">
-      <div class="music-card">
+  <section class="featured-albums">
+    <h2>Featured Tracks</h2>
+    <div class="album-list" id="featured-tracks-list">
+      <div class="album-card">
         <h3>Loading...</h3>
       </div>
     </div>
-  </main>
+  </section>
 
   <div class="music-player">
     <div class="player-song-info">
@@ -130,6 +132,11 @@
     import { supabase } from './supabase.js';
     import { player } from './player.js';
 
+    gsap.from(".header", {y: -100, opacity: 0, duration: 1});
+    gsap.from(".hero-title", {y: 50, opacity: 0, duration: 1, delay: 0.3});
+    gsap.from(".hero-subtitle", {opacity: 0, duration: 1, delay: 0.6});
+    gsap.from(".browse-btn", {scale: 0, duration: 0.5, delay: 1});
+
     window.toggleMenu = function() {
       const navMenu = document.getElementById("navMenu");
       navMenu.classList.toggle("active");
@@ -137,104 +144,68 @@
       burger.textContent = navMenu.classList.contains("active") ? "✖" : "☰";
     };
 
-    let allSongs = [];
-    let filteredSongs = [];
-    let currentGenre = 'All';
+    async function loadTopArtists() {
+      const { data: artists, error } = await supabase
+        .from('artists')
+        .select('*')
+        .order('followers_count', { ascending: false })
+        .limit(6);
 
-    async function loadSongs() {
+      if (error) {
+        console.error('Error loading artists:', error);
+        return;
+      }
+
+      const container = document.getElementById('top-artists-list');
+      container.innerHTML = '';
+
+      artists.forEach(artist => {
+        const card = document.createElement('div');
+        card.className = 'artist-card';
+        card.textContent = artist.name;
+        card.style.cursor = 'pointer';
+        card.onclick = () => window.location.href = 'artist.html';
+        container.appendChild(card);
+      });
+    }
+
+    async function loadFeaturedTracks() {
       const { data: songs, error } = await supabase
         .from('songs')
         .select(`
           *,
           artists (name)
         `)
-        .order('play_count', { ascending: false });
+        .eq('is_featured', true)
+        .limit(6);
 
       if (error) {
         console.error('Error loading songs:', error);
         return;
       }
 
-      allSongs = songs;
-      filteredSongs = songs;
-      displaySongs(songs);
-      createGenreFilters();
-    }
-
-    function createGenreFilters() {
-      const genres = ['All', ...new Set(allSongs.map(s => s.genre).filter(Boolean))];
-      const container = document.getElementById('genre-filters');
+      const container = document.getElementById('featured-tracks-list');
       container.innerHTML = '';
 
-      genres.forEach(genre => {
-        const btn = document.createElement('button');
-        btn.textContent = genre;
-        btn.className = genre === 'All' ? 'genre-filter-active' : 'genre-filter';
-        btn.style.cssText = `padding: 8px 16px; border-radius: 20px; border: none; cursor: pointer;
-          background: ${genre === 'All' ? '#ec4899' : 'rgba(255,255,255,0.1)'};
-          color: white; font-weight: ${genre === 'All' ? 'bold' : 'normal'};`;
-        btn.onclick = () => filterByGenre(genre);
-        container.appendChild(btn);
-      });
-    }
-
-    function filterByGenre(genre) {
-      currentGenre = genre;
-      applyFilters();
-      document.querySelectorAll('#genre-filters button').forEach(btn => {
-        const isActive = btn.textContent === genre;
-        btn.style.background = isActive ? '#ec4899' : 'rgba(255,255,255,0.1)';
-        btn.style.fontWeight = isActive ? 'bold' : 'normal';
-      });
-    }
-
-    function applyFilters() {
-      const searchTerm = document.getElementById('search-input').value.toLowerCase();
-
-      filteredSongs = allSongs.filter(song => {
-        const matchesGenre = currentGenre === 'All' || song.genre === currentGenre;
-        const matchesSearch = !searchTerm ||
-          song.title.toLowerCase().includes(searchTerm) ||
-          song.artists?.name.toLowerCase().includes(searchTerm);
-        return matchesGenre && matchesSearch;
-      });
-
-      displaySongs(filteredSongs);
-    }
-
-    function displaySongs(songs) {
-      const container = document.getElementById('songs-grid');
-      container.innerHTML = '';
-
-      if (songs.length === 0) {
-        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #aaa; padding: 40px;">No songs found</div>';
-        return;
-      }
-
-      songs.forEach((song, index) => {
+      songs.forEach(song => {
         const card = document.createElement('div');
-        card.className = 'music-card';
+        card.className = 'album-card';
         card.innerHTML = `
-          <img src="${song.cover_image_url}" alt="${song.title}"
-            style="width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 15px;">
-          <h3 style="font-size: 1.1rem; margin-bottom: 5px; color: white;">${song.title}</h3>
-          <p style="color: #aaa; margin-bottom: 5px;">by ${song.artists?.name || 'Unknown'}</p>
-          <p style="color: #ec4899; font-size: 0.85rem; margin-bottom: 10px;">${song.genre || 'Unknown'}</p>
-          <button class="listen-btn" style="width: 100%; padding: 10px; border: none; border-radius: 20px;
-            background: #ec4899; color: white; font-weight: bold; cursor: pointer;">Play Now</button>
+          <img src="${song.cover_image_url}" alt="${song.title}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">
+          <h3>${song.title}</h3>
+          <p>by ${song.artists?.name || 'Unknown Artist'}</p>
+          <button class="listen-btn">Play Now</button>
         `;
 
         card.querySelector('.listen-btn').onclick = () => {
           const songWithArtist = { ...song, artist_name: song.artists?.name };
-          player.setQueue(filteredSongs.map(s => ({ ...s, artist_name: s.artists?.name })), index);
+          player.setQueue([songWithArtist], 0);
           player.play();
         };
 
         container.appendChild(card);
       });
     }
-
-    document.getElementById('search-input').addEventListener('input', applyFilters);
 
     document.getElementById('play-btn').onclick = () => player.togglePlay();
     document.getElementById('next-btn').onclick = () => player.playNext();
@@ -252,7 +223,8 @@
       player.seek(percent * player.audio.duration);
     };
 
-    loadSongs();
+    loadTopArtists();
+    loadFeaturedTracks();
   </script>
 </body>
 </html>
