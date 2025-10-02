@@ -1,0 +1,230 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #5b21b6, #000);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 70px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.desktop-nav a {
+  margin: 0 15px;
+  font-weight: 500;
+}
+
+.desktop-nav a:hover,
+.desktop-nav a.active {
+  color: #f472b6;
+}
+
+/* Auth Buttons */
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.login-btn, .signup-btn, .buy-btn {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+  color: white;
+}
+
+.login-btn { background: #3b82f6; }
+.login-btn:hover { background: #2563eb; }
+
+.signup-btn { background: #10b981; }
+.signup-btn:hover { background: #059669; }
+
+.buy-btn { background: #ec4899; }
+.buy-btn:hover { background: #db2777; }
+
+/* Browse Section */
+.browse-section {
+  flex: 1;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.browse-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  color: #d1d5db;
+  margin-bottom: 40px;
+}
+
+.music-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.music-card {
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+
+.music-card:hover {
+  transform: translateY(-5px);
+}
+
+.music-card h3 {
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+}
+
+.music-card p {
+  margin-bottom: 6px;
+}
+
+.music-card .price {
+  font-weight: bold;
+  color: #f472b6;
+  margin-bottom: 12px;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background: #2e1065;
+  color: #d1d5db;
+}
+
+.footer .socials {
+  margin-top: 10px;
+}
+
+.footer .socials a {
+  margin: 0 10px;
+  font-size: 0.95rem;
+}
+
+.footer .socials a:hover {
+  color: #f472b6;
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktop-nav, .desktop-auth {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .mobile-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    position: fixed;
+    top: 70px;
+    left: -100%;
+    width: 70%;
+    height: calc(100% - 70px);
+    background: linear-gradient(to bottom, #5b21b6, #2e1065);
+    padding: 25px;
+    transition: left 0.4s ease-in-out;
+    z-index: 1000;
+    border-top-right-radius: 12px;
+  }
+
+  .mobile-nav a {
+    display: block;
+    width: 100%;
+    padding: 15px 0;
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .mobile-nav .auth-buttons {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .mobile-nav .auth-buttons button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .mobile-nav.active {
+    display: flex;
+    left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    height: 75px;
+  }
+
+  .mobile-nav {
+    width: 80%;
+    top: 75px;
+    height: calc(100% - 75px);
+  }
+}

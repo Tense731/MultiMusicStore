@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - MultiMusic Store</title>
+  <link rel="stylesheet" href="about.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <h1 class="logo">MultiMusic Store</h1>
+
+    <!-- Desktop Nav -->
+    <nav class="desktop-nav">
+      <a href="home.html">Home</a>
+      <a href="browse.html">Browse</a>
+      <a href="artist.html">Artists</a>
+      <a href="about.html" class="active">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- Auth Buttons -->
+    <div class="auth-buttons desktop-auth">
+     <a href="login.html" class="login-btn">Login</a>
+    <a href="signup.html" class="signup-btn">Sign Up</a>
+    </div>
+
+    <!-- Hamburger -->
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav" id="navMenu">
+    <a href="home.html">Home</a>
+    <a href="browse.html">Browse</a>
+    <a href="artist.html">Artists</a>
+    <a href="about.html" class="active">About</a>
+    <a href="contact.html">Contact</a>
+    <div class="auth-buttons">
+      <button class="login-btn"><a href="login.html">Login</a></button>
+      <button class="signup-btn"><a href="signup.html">Sign Up</a></button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <h2>About MultiMusic Store</h2>
+    <p>Your gateway to discovering, supporting, and empowering independent artists worldwide.</p>
+  </section>
+
+  <!-- OUR STORY -->
+  <section class="our-story">
+    <h3>Our Story</h3>
+    <p>
+      MultiMusic Store was founded with one mission: to create a space where artists 
+      control their music journey and listeners get direct access to authentic sounds. 
+      We believe music has the power to connect, inspire, and transform lives.
+    </p>
+  </section>
+
+  <!-- MISSION & VISION -->
+  <section class="mission-vision">
+    <div class="card">
+      <h3>🎯 Our Mission</h3>
+      <p>
+        To support independent artists by providing a fair platform for sharing their 
+        music, while ensuring listeners discover diverse sounds without boundaries.
+      </p>
+    </div>
+    <div class="card">
+      <h3>🌍 Our Vision</h3>
+      <p>
+        To become the leading global hub for independent music — where every talent 
+        finds an audience and every listener finds their voice in music.
+      </p>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="why-choose">
+    <h3>Why Choose MultiMusic Store?</h3>
+    <div class="reasons">
+      <div class="reason-card">
+        <h4>💡 Direct Support</h4>
+        <p>Every purchase directly supports the artist — no middlemen, just music.</p>
+      </div>
+      <div class="reason-card">
+        <h4>🎶 Unlimited Variety</h4>
+        <p>From gospel to hip-hop, Afrobeat to R&B, discover fresh sounds daily.</p>
+      </div>
+      <div class="reason-card">
+        <h4>🤝 Community Driven</h4>
+        <p>We’re building a global family of artists and fans who grow together.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h3>Join the Movement</h3>
+    <p>Whether you’re an artist ready to share your sound or a listener seeking fresh vibes — MultiMusic Store is for you.</p>
+    <button class="signup-btn">Get Started</button>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 MultiMusic Store | Built for Artists, Loved by Listeners</p>
+    <div class="socials">
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+  </footer>
+
+  <!-- Animation + Menu Script -->
+  <script>
+    gsap.from(".about-hero h2", {y: 50, opacity: 0, duration: 1});
+    gsap.from(".our-story p", {opacity: 0, duration: 1, delay: 0.3});
+    gsap.from(".card", {scale: 0.8, opacity: 0, stagger: 0.3, delay: 0.6});
+    gsap.from(".reason-card", {y: 30, opacity: 0, stagger: 0.2, delay: 1});
+    gsap.from(".cta", {y: 50, opacity: 0, duration: 1, delay: 1.5});
+
+    function toggleMenu() {
+      const navMenu = document.getElementById("navMenu");
+      navMenu.classList.toggle("active");
+
+      const burger = document.querySelector(".hamburger");
+      burger.textContent = navMenu.classList.contains("active") ? "✖" : "☰";
+    }
+  </script>
+</body>
+</html>

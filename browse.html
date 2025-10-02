@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Music | MultiMusic Store</title>
+  <link rel="stylesheet" href="browse.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <h1 class="logo">MultiMusic Store</h1>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
+      <a href="home.html">Home</a>
+      <a href="browse.html" class="active">Browse</a>
+      <a href="artist.html">Artists</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+
+    <!-- Auth Buttons (desktop only) -->
+    <div class="auth-buttons desktop-auth">
+       <a href="login.html" class="login-btn">Login</a>
+    <a href="signup.html" class="signup-btn">Sign Up</a>
+    </div>
+
+    <!-- Hamburger (mobile only) -->
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav" id="navMenu">
+    <a href="home.html">Home</a>
+    <a href="browse.html" class="active">Browse</a>
+    <a href="#">Artists</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+    <div class="auth-buttons">
+     <button class="login-btn"><a href="login.html">Login</a></button>
+      <button class="signup-btn"><a href="signup.html">Sign Up</a></button>
+    </div>
+  </nav>
+
+  <!-- BROWSE SECTION -->
+  <main class="browse-section">
+    <h2>Browse Music</h2>
+    <p class="section-subtitle">Explore trending songs and support your favorite artists</p>
+
+    <div class="music-grid">
+      <!-- Song Card -->
+      <div class="music-card">
+        <h3>Song One</h3>
+        <p>by Artist A</p>
+        <p class="price">$2.99</p>
+        <button class="buy-btn">Buy Now</button>
+      </div>
+
+      <div class="music-card">
+        <h3>Song Two</h3>
+        <p>by Artist B</p>
+        <p class="price">$1.99</p>
+        <button class="buy-btn">Buy Now</button>
+      </div>
+
+      <div class="music-card">
+        <h3>Song Three</h3>
+        <p>by Artist C</p>
+        <p class="price">$3.49</p>
+        <button class="buy-btn">Buy Now</button>
+      </div>
+
+      <div class="music-card">
+        <h3>Song Four</h3>
+        <p>by Artist D</p>
+        <p class="price">$2.49</p>
+        <button class="buy-btn">Buy Now</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 MultiMusic Store | Built for Artists, Loved by Listeners</p>
+    <div class="socials">
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    // Toggle Hamburger Menu
+    function toggleMenu() {
+      const navMenu = document.getElementById("navMenu");
+      navMenu.classList.toggle("active");
+
+      const burger = document.querySelector(".hamburger");
+      burger.textContent = navMenu.classList.contains("active") ? "✖" : "☰";
+    }
+  </script>
+</body>
+</html>

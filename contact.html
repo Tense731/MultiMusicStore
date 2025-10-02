@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - MultiMusic Store</title>
+  <link rel="stylesheet" href="contact.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <h1 class="logo">MultiMusic Store</h1>
+
+    <!-- Desktop Nav -->
+    <nav class="desktop-nav">
+      <a href="home.html">Home</a>
+      <a href="browse.html">Browse</a>
+      <a href="artist.html">Artists</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+
+    <!-- Auth Buttons -->
+    <div class="auth-buttons desktop-auth">
+     <a href="login.html" class="login-btn">Login</a>
+    <a href="signup.html" class="signup-btn">Sign Up</a>
+    </div>
+
+    <!-- Hamburger -->
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav" id="navMenu">
+    <a href="home.html">Home</a>
+    <a href="browse.html">Browse</a>
+    <a href="artist.html">Artists</a>
+    <a href="about.html">About</a>
+    <a href="contact.html" class="active">Contact</a>
+    <div class="auth-buttons">
+       <button class="login-btn"><a href="login.html">Login</a></button>
+      <button class="signup-btn"><a href="signup.html">Sign Up</a></button>
+    </div>
+  </nav>
+
+  <!-- CONTACT HERO -->
+  <section class="contact-hero">
+    <h2>Get in Touch</h2>
+    <p>We’d love to hear from you! Reach out with your questions, feedback, or collaboration ideas.</p>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section class="contact-section">
+    <!-- Contact Form -->
+    <form class="contact-form">
+      <h3>Send Us a Message</h3>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+
+    <!-- Contact Info -->
+    <div class="contact-info">
+      <h3>Contact Information</h3>
+      <p>📧 Email: support@multimusic.com</p>
+      <p>📞 Phone: +234 800 123 4567</p>
+      <p>📍 Location: Lagos, Nigeria</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 MultiMusic Store | Built for Artists, Loved by Listeners</p>
+    <div class="socials">
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+  </footer>
+
+  <!-- Animation + Menu Script -->
+  <script>
+    gsap.from(".contact-hero h2", {y: 50, opacity: 0, duration: 1});
+    gsap.from(".contact-form", {x: -50, opacity: 0, duration: 1, delay: 0.3});
+    gsap.from(".contact-info", {x: 50, opacity: 0, duration: 1, delay: 0.5});
+
+    function toggleMenu() {
+      const navMenu = document.getElementById("navMenu");
+      navMenu.classList.toggle("active");
+
+      const burger = document.querySelector(".hamburger");
+      burger.textContent = navMenu.classList.contains("active") ? "✖" : "☰";
+    }
+  </script>
+</body>
+</html>

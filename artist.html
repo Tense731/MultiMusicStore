@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artists - MultiMusic Store</title>
+  <link rel="stylesheet" href="artist.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <h1 class="logo">MultiMusic Store</h1>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
+      <a href="home.html">Home</a>
+      <a href="browse.html">Browse</a>
+      <a href="artist.html" class="active">Artists</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- Auth Buttons (desktop only) -->
+    <div class="auth-buttons desktop-auth">
+       <a href="login.html" class="login-btn">Login</a>
+    <a href="signup.html" class="signup-btn">Sign Up</a>
+    </div>
+
+    <!-- Hamburger (mobile only) -->
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav" id="navMenu">
+    <a href="home.html">Home</a>
+    <a href="browse.html">Browse</a>
+    <a href="artist.html" class="active">Artists</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <div class="auth-buttons">
+        <button class="login-btn"><a href="login.html">Login</a></button>
+      <button class="signup-btn"><a href="signup.html">Sign Up</a></button>
+    </div>
+  </nav>
+
+  <!-- ARTISTS SECTION -->
+  <main class="artists-section">
+    <h2>Meet Our Artists</h2>
+    <p class="section-subtitle">Discover independent musicians from around the world</p>
+
+    <!-- Container for dynamic artist cards -->
+    <div id="artistsContainer" class="artists-grid"></div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 MultiMusic Store | Built for Artists, Loved by Listeners</p>
+    <div class="socials">
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+  </footer>
+
+  <!-- ANIMATION + MENU SCRIPT -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    // Replace with your Firebase config
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MSG_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadArtists() {
+      const snap = await getDocs(collection(db, "artists"));
+      const container = document.getElementById("artistsContainer");
+      container.innerHTML = "";
+
+      snap.forEach(doc => {
+        const artist = doc.data();
+        const card = document.createElement("div");
+        card.className = "artist-card";
+
+        card.innerHTML = `
+          <img src="${artist.profilePic || "https://via.placeholder.com/150"}" 
+               alt="${artist.name}" class="artist-img">
+          <h3>${artist.name}</h3>
+          <p class="genre">${artist.genre || "Unknown"}</p>
+          <p class="desc">${artist.desc || ""}</p>
+          <button class="browse-btn">View Profile</button>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    loadArtists();
+
+    // GSAP animations
+    gsap.from(".artists-section h2", {y: 50, opacity: 0, duration: 1});
+    gsap.from(".artist-card", {scale: 0.8, opacity: 0, duration: 1, stagger: 0.2, delay: 0.3});
+
+    // Mobile menu toggle
+    function toggleMenu() {
+      const navMenu = document.getElementById("navMenu");
+      navMenu.classList.toggle("active");
+
+      const burger = document.querySelector(".hamburger");
+      burger.textContent = navMenu.classList.contains("active") ? "✖" : "☰";
+    }
+    window.toggleMenu = toggleMenu;
+  </script>
+</body>
+</html>

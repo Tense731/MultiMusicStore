@@ -1,0 +1,246 @@
+/* General layout */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #6d28d9, #9333ea, #c026d3);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Wrapper centers the card */
+.signup-wrapper {
+  width: 100%;
+  max-width: 420px; /* smaller form width */
+  padding: 10px;
+}
+
+/* Card style */
+.signup-card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.signup-card h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.6rem;
+  color: #4c1d95;
+}
+
+.signup-card .subtitle {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 1.2rem;
+}
+
+/* Input groups */
+.form-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+  width: 90%;              /* make it smaller than the card */
+  display: block;
+  margin: 0 auto;          /* center inside the card */
+  padding: 10px 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;  /* keeps padding inside width */
+}
+
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #9333ea;
+  box-shadow: 0 0 6px rgba(147, 51, 234, 0.25);
+}
+
+/* File input styling */
+.file-input label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #4c1d95;
+  margin-left: 25px;
+}
+
+input[type="file"] {
+  border: 1px dashed #a78bfa;
+  background: #f9f9ff;
+  padding: 8px;
+  cursor: pointer;
+}
+
+input[type="file"]:hover {
+  border-color: #9333ea;
+}
+
+/* Button styling */
+.signup-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #9333ea, #c026d3);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.signup-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(90deg, #7e22ce, #a21caf);
+}
+
+/* Message text */
+#message {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  min-height: 20px;
+}
+
+/* Success & error states */
+#message.success {
+  color: #16a34a; /* green */
+}
+
+#message.error {
+  color: #dc2626; /* red */
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive tweaks */
+@media (max-width: 500px) {
+  .signup-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .signup-card h2 {
+    font-size: 1.4rem;
+  }
+
+  .signup-card .subtitle {
+    font-size: 0.85rem;
+  }
+}
+/* Wrapper */
+
+/* Card */
+.signup-card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.signup-card h2 {
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 22px;
+  color: #222;
+}
+
+.signup-card .subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Form Fields */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.form-group.file-input label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Button */
+.signup-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: #007bff;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.signup-btn:hover {
+  background: #0056b3;
+}
+
+/* Message */
+#message {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* ✅ Responsive */
+@media (max-width: 480px) {
+  .signup-card {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .signup-card h2 {
+    font-size: 20px;
+  }
+
+  .signup-card .subtitle {
+    font-size: 13px;
+  }
+
+  .form-group input {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .signup-btn {
+    font-size: 15px;
+    padding: 10px;
+  }
+}

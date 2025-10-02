@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - MultiMusic Store</title>
+  <link rel="stylesheet" href="signup.css">
+  <!-- Firebase SDK -->
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+</head>
+<body>
+  <div class="signup-wrapper">
+    <div class="signup-card">
+      <h2>Create Your Artist Account</h2>
+      <p class="subtitle">Join our music family and share your talent</p>
+      <form id="signupForm">
+        <div class="form-group">
+          <input type="text" id="name" placeholder="Full Name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" id="email" placeholder="Email Address" required>
+        </div>
+        <div class="form-group">
+          <input type="password" id="password" placeholder="Password" required>
+        </div>
+        <div class="form-group">
+          <input type="text" id="genre" placeholder="Music Genre (e.g. Gospel, Afrobeat)" required>
+        </div>
+        <div class="form-group file-input">
+          <label for="profilePic">Upload Profile Picture</label>
+          <input type="file" id="profilePic" accept="image/*" required>
+        </div>
+        <button type="submit" class="signup-btn">Sign Up</button>
+      </form>
+      <p id="message"></p>
+    </div>
+  </div>
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  // Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyAVuoUW6W6PXxpLB7Lq0r3CsvTK_d7eT2s",
+    authDomain: "musicstore-a0905.firebaseapp.com",
+    projectId: "musicstore-a0905",
+    storageBucket: "musicstore-a0905.appspot.com",
+    messagingSenderId: "40524160306",
+    appId: "1:40524160306:web:2fede34d63de2fe6b68b2b",
+    measurementId: "G-WRMEL0BD0M"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // ✅ Cloudinary upload
+  async function uploadToCloudinary(file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "Xtreme"); // Replace with your Cloudinary preset
+
+    const res = await fetch("https://api.cloudinary.com/v1_1/dzqmuzv0x/image/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!res.ok) throw new Error("Failed to upload image to Cloudinary");
+    const data = await res.json();
+    return data.secure_url;
+  }
+
+  // ✅ Handle Signup
+  const signupForm = document.getElementById("signupForm");
+  const message = document.getElementById("message");
+
+  signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const genre = document.getElementById("genre").value.trim();
+    const file = document.getElementById("profilePic").files[0];
+
+    if (!file) {
+      message.textContent = "Please upload a profile picture.";
+      return;
+    }
+
+    try {
+      // 1. Create user
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // 2. Upload profile picture
+      const photoURL = await uploadToCloudinary(file);
+
+      // 3. Save user data in Firestore
+      await setDoc(doc(db, "artists", user.uid), {
+        name,
+        email,
+        genre,
+        photoURL,
+        createdAt: serverTimestamp(),
+      });
+
+      // ✅ Success message & redirect
+      message.textContent = "Signup successful! 🎉 Redirecting...";
+      message.style.color = "green";
+
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 1500);
+
+    } catch (error) {
+      console.error(error);
+      message.textContent = error.message;
+      message.style.color = "red";
+    }
+  });
+</script>
+
+
+
+  </script>
+
+ 
+</body>
+</html>

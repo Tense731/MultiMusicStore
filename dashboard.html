@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - MultiMusic Store</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <!-- Firebase SDKs -->
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="logo">MultiMusic Store</div>
+
+    <nav class="navbar" id="navbar">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="browse.html">Browse</a></li>
+        <li><a href="artists.html">Artists</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><button class="logout-btn" id="logoutBtn">Logout</button></li>
+      </ul>
+    </nav>
+
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <!-- DASHBOARD CONTENT -->
+  <main class="dashboard">
+    <div class="dashboard-container">
+
+      <!-- Profile -->
+      <div class="dashboard-card profile-card">
+        <img id="profilePic" class="profile-img" src="https://via.placeholder.com/150" alt="Profile Picture">
+        <h2 id="artistName">Loading...</h2>
+        <p id="artistGenre"></p>
+        <p id="artistEmail"></p>
+      </div>
+
+      <!-- My Songs -->
+      <section class="dashboard-card songs-section">
+        <h3>🎵 My Songs</h3>
+        <div class="songs-grid">
+          <div class="song-card">Song 1</div>
+          <div class="song-card">Song 2</div>
+          <div class="song-card">Song 3</div>
+        </div>
+      </section>
+
+      <!-- Statistics -->
+      <section class="dashboard-card stats-section">
+        <h3>📊 Statistics</h3>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h4>12.3k</h4>
+            <p>Plays</p>
+          </div>
+          <div class="stat-card">
+            <h4>5.1k</h4>
+            <p>Downloads</p>
+          </div>
+          <div class="stat-card">
+            <h4>800</h4>
+            <p>Followers</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Actions -->
+      <section class="dashboard-card actions-section">
+        <h3>⚙️ Quick Actions</h3>
+        <div class="actions-buttons">
+          <button class="action-btn">Edit Profile</button>
+          <button class="action-btn">Upload Song</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 MultiMusic Store | Built for Artists, Loved by Listeners</p>
+    <div class="socials">
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+  </footer>
+
+  <!-- Firebase Dashboard Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAVuoUW6W6PXxpLB7Lq0r3CsvTK_d7eT2s",
+      authDomain: "musicstore-a0905.firebaseapp.com",
+      projectId: "musicstore-a0905",
+      storageBucket: "musicstore-a0905.appspot.com",
+      messagingSenderId: "40524160306",
+      appId: "1:40524160306:web:2fede34d63de2fe6b68b2b",
+      measurementId: "G-WRMEL0BD0M"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const docRef = doc(db, "artists", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          document.getElementById("profilePic").src = data.photoURL || "https://via.placeholder.com/150";
+          document.getElementById("artistName").textContent = data.name;
+          document.getElementById("artistEmail").textContent = data.email;
+          document.getElementById("artistGenre").textContent = data.genre;
+        } else {
+          console.log("No such document!");
+        }
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+
+    // Logout
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      signOut(auth).then(() => window.location.href = "login.html");
+    });
+  </script>
+
+  <!-- Hamburger Script -->
+  <script>
+    const hamburger = document.getElementById("hamburger");
+    const navbar = document.getElementById("navbar");
+
+    hamburger.addEventListener("click", () => {
+      navbar.classList.toggle("active");
+      hamburger.classList.toggle("open");
+    });
+  </script>
+</body>
+</html>

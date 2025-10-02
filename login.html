@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - MultiMusic Store</title>
+  <link rel="stylesheet" href="login.css">
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+</head>
+<body>
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Login to your artist account</p>
+      <form id="loginForm">
+        <div class="form-group">
+          <input type="email" id="email" placeholder="Email Address" required>
+        </div>
+        <div class="form-group">
+          <input type="password" id="password" placeholder="Password" required>
+        </div>
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+      <p id="message"></p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    // Firebase config (same as signup)
+    const firebaseConfig = {
+      apiKey: "AIzaSyAVuoUW6W6PXxpLB7Lq0r3CsvTK_d7eT2s",
+      authDomain: "musicstore-a0905.firebaseapp.com",
+      projectId: "musicstore-a0905",
+      storageBucket: "musicstore-a0905.appspot.com",
+      messagingSenderId: "40524160306",
+      appId: "1:40524160306:web:2fede34d63de2fe6b68b2b",
+      measurementId: "G-WRMEL0BD0M"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const loginForm = document.getElementById("loginForm");
+    const message = document.getElementById("message");
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        message.textContent = "Login successful 🎉 Redirecting...";
+        message.style.color = "green";
+
+        setTimeout(() => {
+          window.location.href = "dashboard.html"; // ✅ redirect
+        }, 1500);
+      } catch (error) {
+        message.textContent = error.message;
+        message.style.color = "red";
+      }
+    });
+  </script>
+</body>
+</html>

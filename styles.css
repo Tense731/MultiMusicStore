@@ -1,0 +1,295 @@
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #5b21b6, #000);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 70px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.desktop-nav a {
+  margin: 0 15px;
+  font-weight: 500;
+  color: white;
+}
+
+.desktop-nav a:hover {
+  color: #f472b6;
+}
+
+/* Auth Buttons */
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.login-btn, .signup-btn, .browse-btn, .listen-btn {
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.login-btn { background: #3b82f6; }
+.login-btn:hover { background: #2563eb; }
+
+.signup-btn { background: #10b981; }
+.signup-btn:hover { background: #059669; }
+
+.browse-btn { background: #ec4899; }
+.browse-btn:hover { background: #db2777; }
+
+.listen-btn { background: #8b5cf6; }
+.listen-btn:hover { background: #7c3aed; }
+
+/* Hero Section */
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  max-width: 600px;
+  margin: 0 auto 30px auto;
+  font-size: 1.1rem;
+  color: #d1d5db;
+}
+
+/* Top Artists & Featured Albums */
+.top-artists, .featured-albums {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.top-artists h2, .featured-albums h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #f9fafb;
+  position: relative;
+}
+
+.top-artists h2::after, 
+.featured-albums h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #ec4899;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* Top Artists */
+.artist-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.artist-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px 30px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #f9fafb;
+  transition: 0.3s;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.artist-card:hover {
+  background: #ec4899;
+  color: white;
+  transform: translateY(-5px);
+}
+
+/* Featured Albums */
+.album-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+.album-card {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 25px;
+  border-radius: 15px;
+  width: 280px;
+  text-align: center;
+  transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.album-card h3 {
+  font-size: 1.3rem;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.album-card p {
+  color: #d1d5db;
+  margin-bottom: 15px;
+}
+
+.album-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background: #2e1065;
+  color: #d1d5db;
+}
+
+.footer p { margin: 0; font-size: 0.9rem; }
+
+.socials {
+  margin-top: 10px;
+}
+.socials a {
+  margin: 0 10px;
+  font-size: 0.95rem;
+  color: white;
+}
+.socials a:hover { color: #f472b6; }
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-left: auto;
+  margin-top: 8px;
+  z-index: 1100;
+  position: relative;
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktop-nav, .desktop-auth {
+    display: none; /* hide desktop nav & buttons */
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .mobile-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    position: fixed;
+    top: 70px; /* below header */
+    left: -100%; /* hidden */
+    width: 70%;
+    height: calc(100% - 70px);
+    background: linear-gradient(to bottom, #5b21b6, #2e1065);
+    padding: 25px;
+    transition: left 0.4s ease-in-out;
+    z-index: 1000;
+    border-top-right-radius: 12px;
+  }
+
+  .mobile-nav a {
+    display: block;
+    width: 100%;
+    padding: 15px 0;
+    font-size: 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: white;
+  }
+
+  .mobile-nav .auth-buttons {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .mobile-nav .auth-buttons button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .mobile-nav.active {
+    display: flex;
+    left: 0; /* slide in */
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    height: 75px;
+  }
+
+  .mobile-nav {
+    width: 80%;
+    top: 75px;
+    height: calc(100% - 75px);
+  }
+}

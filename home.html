@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MultiMusic Store</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <h1 class="logo">MultiMusic Store</h1>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
+      <a href="home.html" class="active" style="color: #ec4899;">Home</a>
+      <a href="browse.html">Browse</a>
+      <a href="artist.html">Artists</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- Auth Buttons (desktop only) -->
+    <div class="auth-buttons desktop-auth">
+     <a href="login.html" class="login-btn">Login</a>
+    <a href="signup.html" class="signup-btn">Sign Up</a>
+    </div>
+
+    <!-- Hamburger (mobile only) -->
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav" id="navMenu">
+    <a href="home.html">Home</a>
+    <a href="browse.html">Browse</a>
+    <a href="artist.html">Artists</a>
+    <a href="about.css">About</a>
+    <a href="contact.html">Contact</a>
+    <div class="auth-buttons">
+        <button class="login-btn"><a href="login.html">Login</a></button>
+      <button class="signup-btn"><a href="signup.html">Sign Up</a></button>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <main class="hero">
+    <h2 class="hero-title">Discover & Support Your Favorite Artists</h2>
+    <p class="hero-subtitle">
+      Buy music directly from independent artists and grow their journey while enjoying unlimited sounds.
+    </p>
+    <button class="browse-btn">Browse Music</button>
+  </main>
+
+  <!-- TOP ARTISTS -->
+  <section class="top-artists">
+    <h2>Top Artists</h2>
+    <div class="artist-list">
+      <div class="artist-card">Segun Abon</div>
+      <div class="artist-card">Grace Melody</div>
+      <div class="artist-card">David Strings</div>
+      <div class="artist-card">Esther Voice</div>
+    </div>
+  </section>
+
+  <!-- FEATURED ALBUMS -->
+  <section class="featured-albums">
+    <h2>Featured Albums</h2>
+    <div class="album-list">
+      <div class="album-card">
+        <h3>Echoes of Grace</h3>
+        <p>by Segun Abon</p>
+        <button class="listen-btn">Listen Now</button>
+      </div>
+      <div class="album-card">
+        <h3>Heavenly Strings</h3>
+        <p>by David Strings</p>
+        <button class="listen-btn">Listen Now</button>
+      </div>
+      <div class="album-card">
+        <h3>Melody of Light</h3>
+        <p>by Grace Melody</p>
+        <button class="listen-btn">Listen Now</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 MultiMusic Store | Built for Artists, Loved by Listeners</p>
+    <div class="socials">
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+  </footer>
+
+  <!-- ANIMATION + MENU SCRIPT -->
+  <script>
+    // GSAP Animations
+    gsap.from(".header", {y: -100, opacity: 0, duration: 1});
+    gsap.from(".hero-title", {y: 50, opacity: 0, duration: 1, delay: 0.3});
+    gsap.from(".hero-subtitle", {opacity: 0, duration: 1, delay: 0.6});
+    gsap.from(".browse-btn", {scale: 0, duration: 0.5, delay: 1});
+    gsap.from(".footer", {y: 100, opacity: 0, duration: 1, delay: 1.2});
+
+    // Toggle Hamburger Menu
+    function toggleMenu() {
+      const navMenu = document.getElementById("navMenu");
+      navMenu.classList.toggle("active");
+
+      const burger = document.querySelector(".hamburger");
+      burger.textContent = navMenu.classList.contains("active") ? "✖" : "☰";
+    }
+  </script>
+</body>
+</html>
